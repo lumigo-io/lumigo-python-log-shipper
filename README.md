@@ -1,0 +1,1 @@
+# lumigo-python-log-shipper
