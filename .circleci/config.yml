@@ -73,7 +73,6 @@ jobs:
     steps:
       - checkout_code
       # run tests!
-      - run: export AWS_DEFAULT_REGION=us-west-2 && export USER=CICD && python -m pytest --cov=./ src/test
       - run: export AWS_DEFAULT_REGION=us-west-2 && export USER=CICD && ./scripts/checks.sh
       - run: bash <(curl -s https://codecov.io/bash)
 
