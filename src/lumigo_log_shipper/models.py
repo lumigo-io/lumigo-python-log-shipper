@@ -22,7 +22,7 @@ class AwsLogSubscriptionEvent:
 @dataclass(frozen=True)
 class FunctionDetails:
     resource_id: Optional[str]
-    memory: float = 0  # We cant get memory of the running function from the log-shipper function
+    memory: float = 0.0  # We cant get memory of the running function from the log-shipper function
 
 
 @dataclass(frozen=True)
