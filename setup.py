@@ -11,7 +11,7 @@ setuptools.setup(
     url="https://github.com/lumigo-io/lumigo-python-log-shipper.git",
     package_dir={"": "src"},
     packages=setuptools.find_packages("src"),
-    install_requires=["boto3"],
+    install_requires=["boto3", "attr"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
