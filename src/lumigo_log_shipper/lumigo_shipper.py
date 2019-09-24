@@ -1,10 +1,10 @@
 from dataclasses import asdict
 
-from src.lumigo_log_shipper.models import AwsLogSubscriptionEvent
-from src.lumigo_log_shipper.utils.consts import STREAM_NAME
-from src.lumigo_log_shipper.utils.firehose_dal import FirehoseDal
-from src.lumigo_log_shipper.utils.aws_utils import extract_aws_logs_data
-from src.lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
+from lumigo_log_shipper.models import AwsLogSubscriptionEvent
+from lumigo_log_shipper.utils.consts import STREAM_NAME
+from lumigo_log_shipper.utils.firehose_dal import FirehoseDal
+from lumigo_log_shipper.utils.aws_utils import extract_aws_logs_data
+from lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
 
 
 def ship_logs(aws_event: dict) -> int:

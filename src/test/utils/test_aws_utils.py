@@ -1,8 +1,5 @@
-from src.lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
-from src.lumigo_log_shipper.utils.aws_utils import (
-    extract_aws_logs_data,
-    get_function_arn,
-)
+from lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
+from lumigo_log_shipper.utils.aws_utils import extract_aws_logs_data, get_function_arn
 from src.test.fixtures import *  # noqa
 
 

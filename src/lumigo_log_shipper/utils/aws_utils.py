@@ -4,7 +4,7 @@ import base64
 import os
 from typing import Optional
 
-from src.lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
+from lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
 
 
 def extract_aws_logs_data(event: dict) -> AwsLogSubscriptionEvent:

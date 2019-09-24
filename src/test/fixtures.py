@@ -1,6 +1,6 @@
 import pytest
 
-from src.lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
+from lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
 
 
 @pytest.fixture()

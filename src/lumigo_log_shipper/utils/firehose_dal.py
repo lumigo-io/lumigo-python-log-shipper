@@ -4,8 +4,8 @@ from typing import List, Dict, Any
 import boto3
 from attr import dataclass
 
-from src.lumigo_log_shipper.utils.encoder import DecimalEncoder
-from src.lumigo_log_shipper.utils.utils import split_to_chunks
+from lumigo_log_shipper.utils.encoder import DecimalEncoder
+from lumigo_log_shipper.utils.utils import split_to_chunks
 
 MAX_RETRY_COUNT = 2
 MAX_MESSAGES_TO_FIREHOSE = 500  # Firehose supports batch up to 500 messages.

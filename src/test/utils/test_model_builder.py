@@ -1,5 +1,5 @@
-from src.lumigo_log_shipper.models import ShipperOutput, EventDetails, FunctionDetails
-from src.lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
+from lumigo_log_shipper.models import ShipperOutput, EventDetails, FunctionDetails
+from lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
 from src.test.fixtures import *  # noqa
 
 

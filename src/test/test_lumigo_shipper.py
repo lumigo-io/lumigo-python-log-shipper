@@ -1,4 +1,4 @@
-from src.lumigo_log_shipper.lumigo_shipper import ship_logs
+from lumigo_log_shipper.lumigo_shipper import ship_logs
 from src.test.fixtures import *  # noqa
 
 

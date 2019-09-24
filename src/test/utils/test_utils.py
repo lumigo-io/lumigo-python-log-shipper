@@ -1,4 +1,4 @@
-from src.lumigo_log_shipper.utils.utils import split_to_chunks
+from lumigo_log_shipper.utils.utils import split_to_chunks
 
 
 def test_split_to_chunks_empty_list():

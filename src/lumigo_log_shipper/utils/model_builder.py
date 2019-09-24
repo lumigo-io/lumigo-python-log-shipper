@@ -1,12 +1,12 @@
 from typing import List
 
-from src.lumigo_log_shipper.models import (
+from lumigo_log_shipper.models import (
     AwsLogSubscriptionEvent,
     ShipperOutput,
     EventDetails,
     FunctionDetails,
 )
-from src.lumigo_log_shipper.utils.aws_utils import get_function_arn
+from lumigo_log_shipper.utils.aws_utils import get_function_arn
 
 
 def parse_aws_extracted_data(

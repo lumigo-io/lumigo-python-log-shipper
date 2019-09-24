@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from dataclasses import dataclass
 
 
@@ -21,7 +21,7 @@ class AwsLogSubscriptionEvent:
 
 @dataclass(frozen=True)
 class FunctionDetails:
-    resource_id: str
+    resource_id: Optional[str]
     memory: float = 0  # We cant get memory of the running function from the log-shipper function
 
 

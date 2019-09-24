@@ -1,8 +1,8 @@
 from typing import List
 
-from pytest import fixture, yield_fixture
+from pytest import fixture
 
-from src.lumigo_log_shipper.utils.firehose_dal import FirehoseDal
+from lumigo_log_shipper.utils.firehose_dal import FirehoseDal
 
 
 def mock_boto_firehose_client():
@@ -17,12 +17,7 @@ class MockFirehoseBotoClient:
         }
 
 
-@yield_fixture
-def firehose_dal(monkeypatch) -> FirehoseDal:
+@fixture(autouse=True)
+def firehose_dal_mock(monkeypatch):
     monkeypatch.setattr(FirehoseDal, "get_boto_client", mock_boto_firehose_client)
     yield
-
-
-@fixture(autouse=True)
-def firehose_dal_mock(firehose_dal):
-    pass
