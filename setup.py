@@ -8,8 +8,8 @@ VERSION_PATH = os.path.join(
 setuptools.setup(
     name="python-log-shipper",
     version=open(VERSION_PATH).read(),
-    author="Lumigo",
-    author_email="lumigo.io",
+    author="Lumigo LTD (https://lumigo.io)",
+    author_email="support@lumigo.io",
     description="Ship logs to lumigo platform",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
