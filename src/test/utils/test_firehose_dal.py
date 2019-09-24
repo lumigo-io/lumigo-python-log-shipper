@@ -3,7 +3,7 @@ from typing import List
 
 import pytest
 
-from src.utils.firehose_dal import FirehoseDal, Batch
+from src.lumigo_log_shipper.utils.firehose_dal import FirehoseDal, Batch
 
 RANDOM_RECORD_ID = "RANDOM_RECORD_ID"
 RANDOM_ERROR_CODE = "RANDOM_ERROR_CODE"

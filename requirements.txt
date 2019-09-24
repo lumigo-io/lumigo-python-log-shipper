@@ -6,3 +6,4 @@ pytest==4.0.2
 cachetools
 aiobotocore==0.10.3
 aioboto3==6.4.1
+dacite==1.0.2

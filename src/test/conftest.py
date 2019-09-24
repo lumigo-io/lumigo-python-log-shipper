@@ -2,7 +2,7 @@ from typing import List
 
 from pytest import fixture, yield_fixture
 
-from src.utils.firehose_dal import FirehoseDal
+from src.lumigo_log_shipper.utils.firehose_dal import FirehoseDal
 
 
 def mock_boto_firehose_client():

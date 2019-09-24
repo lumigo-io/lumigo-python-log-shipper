@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/lumigo-io/lumigo-python-log-shipper.git",
     package_dir={"": "src"},
-    packages=setuptools.find_packages("src", exclude=["test"]),
+    packages=setuptools.find_packages("src"),
     install_requires=[],
     classifiers=[
         "Programming Language :: Python :: 3",

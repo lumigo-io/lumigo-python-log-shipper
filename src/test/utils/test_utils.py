@@ -1,4 +1,4 @@
-from src.utils.utils import split_to_chunks
+from src.lumigo_log_shipper.utils.utils import split_to_chunks
 
 
 def test_split_to_chunks_simple_flow():
