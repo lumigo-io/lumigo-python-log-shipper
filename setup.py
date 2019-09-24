@@ -1,15 +1,15 @@
+import os
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+VERSION_PATH = os.path.join(os.path.dirname(__file__), "src", "lumigo_log_shipper", "VERSION")
 
 setuptools.setup(
     name="python-log-shipper",
-    version="1.0.0",
+    version=open(VERSION_PATH).read(),
     author="Lumigo",
     author_email="lumigo.io",
     description="Ship logs to lumigo platform",
-    long_description=long_description,
+    long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/lumigo-io/lumigo-python-log-shipper.git",
     package_dir={"": "src"},
