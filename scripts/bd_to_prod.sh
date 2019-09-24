@@ -29,11 +29,10 @@ changes=$(git log $(git describe --tags --abbrev=0)..HEAD --oneline)
 sudo pip install --upgrade bumpversion
 bumpversion patch --message "{current_version} → {new_version}. Changes: ${changes}"
 
-echo "Uploading to gemfury"
+echo "Uploading to PyPi"
 python setup.py sdist
-
-upload_file=$(ls ./dist/*.gz)
-curl -F package=@${upload_file} https://${FURY_AUTH}@push.fury.io/lumigo/
+pip install twine
+twine upload dist/*
 
 echo "Create release tag"
 push_tags
