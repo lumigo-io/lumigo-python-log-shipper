@@ -20,17 +20,18 @@ echo "|    |___|  |  /  Y Y  \  / /_/  >  <_> )   |  (  <_> )";
 echo "|_______ \____/|__|_|  /__\___  / \____/ /\ |__|\____/ ";
 echo "        \/           \/  /_____/         \/            ";
 echo
-echo "Deploy lumigo-logger to pypi server"
 
 setup_git
 echo "Getting latest changes from git"
 changes=$(git log $(git describe --tags --abbrev=0)..HEAD --oneline)
 
+echo "Create package"
+python setup.py bdist_wheel
+
 sudo pip install --upgrade bumpversion
 bumpversion patch --message "{current_version} → {new_version}. Changes: ${changes}"
 
 echo "Uploading to PyPi"
-python setup.py sdist
 pip install twine
 twine upload dist/*
 
