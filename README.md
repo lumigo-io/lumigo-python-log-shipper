@@ -1,6 +1,6 @@
 # lumigo-python-log-shipper
 ```
-from lumigo_log_shipper.shipper import LumigoShipper
+from lumigo_log_shipper.shipper import ship_logs
 def my_lambda(event, context):
-    shipper = LumigoShipper(account)
+    ship_logs(event)
 ```
