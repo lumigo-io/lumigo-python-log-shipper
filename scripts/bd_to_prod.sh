@@ -5,7 +5,7 @@ setup_git() {
     git config --global user.email "no-reply@build.com"
     git config --global user.name "CircleCI"
     git checkout master
-    # Avoid npm version failure
+    # Avoid version failure
     git stash
 }
 
@@ -22,11 +22,14 @@ echo "        \/           \/  /_____/         \/            ";
 echo
 
 setup_git
-echo "Getting latest changes from git"
-changes=$(git log $(git describe --tags --abbrev=0)..HEAD --oneline)
+
+pip install wheel
 
 echo "Create package"
 python setup.py bdist_wheel
+
+echo "Getting latest changes from git"
+changes=$(git log $(git describe --tags --abbrev=0)..HEAD --oneline)
 
 sudo pip install --upgrade bumpversion
 bumpversion patch --message "{current_version} → {new_version}. Changes: ${changes}"
