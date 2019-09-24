@@ -1,4 +1,3 @@
-from collections import Counter
 from typing import List
 
 import pytest
@@ -9,9 +8,9 @@ RANDOM_RECORD_ID = "RANDOM_RECORD_ID"
 RANDOM_ERROR_CODE = "RANDOM_ERROR_CODE"
 
 
-def test_create_batched_from_chunks_simple():
+def test_create_batches_from_chunks_simple():
     chunks = [[1], [2]]
-    result = FirehoseDal.create_batched_from_chunks(chunks)
+    result = FirehoseDal.create_batches_from_chunks(chunks)
     assert result == [Batch([1], 1), Batch([2], 1)]
 
 
@@ -37,12 +36,11 @@ def test_get_failed_items_return_correct_items(
 def test_get_failed_items_add_to_failed_by_error_code(
     kinesis_success_item, kinesis_failed_item
 ):
-    current_batch = Batch(records=[1, 2])
     kinesis_response = [kinesis_success_item, kinesis_failed_item]
     firehose_service = FirehoseDal("random-stream-name")
-    firehose_service.get_failed_items(current_batch, kinesis_response)
+    firehose_service.update_failed_by_error_code(kinesis_response)
 
-    assert firehose_service.failed_by_error_code == Counter({RANDOM_ERROR_CODE: 1})
+    assert firehose_service.failed_by_error_code == {RANDOM_ERROR_CODE: 1}
 
 
 def test_put_records_happy_flow():
@@ -50,7 +48,7 @@ def test_put_records_happy_flow():
     assert firehose.put_record_batch(records=[{"id": 1}]) == 1
 
 
-def test_put_records_happy_flow_with_non_default_max():
+def test_put_records_happy_flow_with_non_default_batch_size():
     firehose = FirehoseDal(stream_name="stream_name", batch_size=1)
 
     assert firehose.put_record_batch(records=[{"id": 1}]) == 1
@@ -66,11 +64,6 @@ def test_put_records_with_record_invalid():
     firehose = FirehoseDal(stream_name="stream_name")
 
     assert firehose.put_record_batch(records=[Exception()]) == 0  # noqa
-
-
-def test_parse_firehose_from_record():
-    firehose = FirehoseDal(stream_name="stream_name")
-    firehose.put_record_batch(records=[{"id": 1}])
 
 
 def test_put_records_error_on_first_try_success_in_second_try(monkeypatch):
@@ -104,7 +97,7 @@ class MockFirehoseBotoClientRetryWithException:
 
     def put_record_batch(self, DeliveryStreamName: str, Records: List[dict]):
         if self.retry > 0:
-            self.retry = self.retry - 1
+            self.retry -= 1
             raise Exception()
         return {
             "FailedPutCount": 0,
@@ -118,7 +111,7 @@ class MockFirehoseBotoClientRetryWithError:
 
     def put_record_batch(self, DeliveryStreamName: str, Records: List[dict]):
         if self.retry > 0:
-            self.retry = self.retry - 1
+            self.retry -= 1
             return {
                 "FailedPutCount": 0,
                 "RequestResponses": [
@@ -141,7 +134,7 @@ class MockFirehoseBotoClientException:
 
     def put_record_batch(self, DeliveryStreamName: str, Records: List[dict]):
         if self.retry > 0:
-            self.retry = self.retry - 1
+            self.retry -= 1
             raise Exception()
         self.records.extend(Records)
         return {
