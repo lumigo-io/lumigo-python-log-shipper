@@ -1,7 +1,9 @@
 import os
 import setuptools
 
-VERSION_PATH = os.path.join(os.path.dirname(__file__), "src", "lumigo_log_shipper", "VERSION")
+VERSION_PATH = os.path.join(
+    os.path.dirname(__file__), "src", "lumigo_log_shipper", "VERSION"
+)
 
 setuptools.setup(
     name="python-log-shipper",
