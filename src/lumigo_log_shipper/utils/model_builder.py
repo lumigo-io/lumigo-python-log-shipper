@@ -1,6 +1,3 @@
-# from typing import List
-#
-# from src.lumigo_log_shipper.models import ShipperOutput
 from typing import List
 
 from src.lumigo_log_shipper.models import (
@@ -12,7 +9,7 @@ from src.lumigo_log_shipper.models import (
 from src.lumigo_log_shipper.utils.aws_utils import get_function_arn
 
 
-def parse_from_aws_extracted_data(
+def parse_aws_extracted_data(
     extracted_data: AwsLogSubscriptionEvent
 ) -> List[ShipperOutput]:
     result: List[ShipperOutput] = []

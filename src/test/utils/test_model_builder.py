@@ -1,10 +1,10 @@
 from src.lumigo_log_shipper.models import ShipperOutput, EventDetails, FunctionDetails
-from src.lumigo_log_shipper.utils.model_builder import parse_from_aws_extracted_data
-from src.test.fixtures import *
+from src.lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
+from src.test.fixtures import *  # noqa
 
 
-def test_parse_from_aws_extracted_data_simple_flow(simple_extracted_data):
-    shipper_output = parse_from_aws_extracted_data(simple_extracted_data)
+def test_parse_aws_extracted_data_simple_flow(simple_extracted_data):
+    shipper_output = parse_aws_extracted_data(simple_extracted_data)
     assert shipper_output == [
         ShipperOutput(
             event_details=EventDetails(

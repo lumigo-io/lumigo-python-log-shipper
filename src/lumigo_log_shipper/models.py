@@ -1,5 +1,4 @@
 from typing import List
-
 from dataclasses import dataclass
 
 
@@ -23,7 +22,7 @@ class AwsLogSubscriptionEvent:
 @dataclass(frozen=True)
 class FunctionDetails:
     resource_id: str
-    memory: float = 0  # We cant get the memory from this context
+    memory: float = 0  # We cant get memory of the running function from the log-shipper function
 
 
 @dataclass(frozen=True)

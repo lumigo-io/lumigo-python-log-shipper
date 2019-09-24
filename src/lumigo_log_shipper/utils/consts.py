@@ -1,8 +1,6 @@
 import os
 
-IS_LAMBDA_ENVIRONMENT = (
-    True if ("AWS_EXECUTION_ENV" in os.environ and os.environ["AWS_EXECUTION_ENV"]) else False
-)
+IS_LAMBDA_ENVIRONMENT = bool(os.environ.get("AWS_EXECUTION_ENV"))
 
 MASTER_REGION = "us-west-2"
 

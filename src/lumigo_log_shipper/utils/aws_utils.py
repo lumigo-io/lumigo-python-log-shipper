@@ -2,7 +2,7 @@ import gzip
 import json
 import base64
 import os
-
+from typing import Optional
 
 from src.lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
 
@@ -23,7 +23,7 @@ def extract_aws_logs_data(event: dict) -> AwsLogSubscriptionEvent:
                 timestamp=event.get("timestamp"),
                 message=event.get("message"),
             )
-            for event in logs_data_dict.get("logEvents")
+            for event in logs_data_dict.get("logEvents", [])
         ],
     )
 
@@ -32,7 +32,11 @@ def get_current_region() -> str:
     return os.environ.get("AWS_REGION", "us-west-2")
 
 
-def get_function_arn(extracted_data: AwsLogSubscriptionEvent) -> str:
+def get_function_arn(extracted_data: AwsLogSubscriptionEvent) -> Optional[str]:
     region = get_current_region()
-    function_name = extracted_data.log_group.split("/")[3]
-    return f"arn:aws:lambda:{region}:{extracted_data.owner}:function:{function_name}"
+    if extracted_data.log_group:
+        function_name = extracted_data.log_group.split("/")[3]
+        return (
+            f"arn:aws:lambda:{region}:{extracted_data.owner}:function:{function_name}"
+        )
+    return None
