@@ -1,5 +1,9 @@
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
-from lumigo_log_shipper.utils.aws_utils import extract_aws_logs_data, get_function_arn
+from lumigo_log_shipper.utils.aws_utils import (
+    extract_aws_logs_data,
+    get_function_arn,
+    get_function_name_from_arn,
+)
 from src.test.fixtures import *  # noqa
 
 
@@ -32,3 +36,8 @@ def test_get_function_arn(simple_extracted_data):
     assert (
         function_arn == f"arn:aws:lambda:us-west-2:335722316285:function:test-http-req"
     )
+
+
+def test_get_function_name_from_arn():
+    arn = "arn:aws:lambda:us-west-2:11:function:func_name"
+    assert get_function_name_from_arn(arn) == "func_name"

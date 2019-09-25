@@ -5,10 +5,6 @@ from pytest import fixture
 from lumigo_log_shipper.utils.firehose_dal import FirehoseDal
 
 
-def mock_boto_firehose_client():
-    return MockFirehoseBotoClient()
-
-
 class MockFirehoseBotoClient:
     def put_record_batch(self, DeliveryStreamName: str, Records: List[dict]):
         return {
@@ -19,5 +15,7 @@ class MockFirehoseBotoClient:
 
 @fixture(autouse=True)
 def firehose_dal_mock(monkeypatch):
-    monkeypatch.setattr(FirehoseDal, "get_boto_client", mock_boto_firehose_client)
+    monkeypatch.setattr(
+        FirehoseDal, "get_boto_client", lambda x, y: MockFirehoseBotoClient()
+    )
     yield
