@@ -32,6 +32,10 @@ def get_current_region() -> str:
     return os.environ.get("AWS_REGION", "us-west-2")
 
 
+def get_function_name_from_arn(arn: str) -> str:
+    return arn.split(":")[6]
+
+
 def get_function_arn(extracted_data: AwsLogSubscriptionEvent) -> Optional[str]:
     region = get_current_region()
     if extracted_data.log_group:
