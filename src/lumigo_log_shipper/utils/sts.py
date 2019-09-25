@@ -1,4 +1,3 @@
-# Assume the role
 import boto3
 
 
