@@ -22,14 +22,14 @@ def should_report_log(
     return False
 
 
-def _is_valid_log(log_message: str, filter_key_words: List[str]):
-    for key_word in filter_key_words:
-        if key_word.lower() in log_message.lower():
+def _is_valid_log(log_message: str, filter_keywords: List[str]):
+    for keyword in filter_keywords:
+        if keyword.lower() in log_message.lower():
             return True
     return False
 
 
 def filter_logs(
-    logs: List[ShipperOutput], filter_key_words: List[str]
+    logs: List[ShipperOutput], filter_keywords: List[str]
 ) -> List[ShipperOutput]:
-    return [log for log in logs if _is_valid_log(log.message, filter_key_words)]
+    return [log for log in logs if _is_valid_log(log.message, filter_keywords)]

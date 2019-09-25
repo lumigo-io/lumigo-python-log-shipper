@@ -10,6 +10,11 @@ def test_lumigo_shipper_full_flow(simple_aws_event):
     assert records_send == 1
 
 
+def test_lumigo_shipper_full_flow_with_programtic_error_keyword(simple_aws_event):
+    records_send = ship_logs(simple_aws_event, "END")
+    assert records_send == 2
+
+
 def test_should_report_same_env_other_target():
     arn = "arn:aws:lambda:us-west-2:11:function:d_func_name"
     assert should_report_log(arn, "11", "22", "d") is True
@@ -35,7 +40,7 @@ def test_should_report_other_env_same_target_by_self_account_id():
     assert should_report_log(arn, "11", "SELF", "e") is True
 
 
-def test_filter_logs_filter_not_filtering_invalid_items():
+def test_filter_logs_filter_filtering_invalid_items():
     raw_logs = AwsLogSubscriptionEvent(
         message_type="DATA_MESSAGE",
         owner="335722316285",

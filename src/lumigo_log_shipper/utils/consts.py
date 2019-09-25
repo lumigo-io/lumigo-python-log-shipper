@@ -13,7 +13,7 @@ LOG_STREAM_KIIL_SWITCH = os.environ.get("LOG_STREAM_KIIL_SWITCH", None) == "TRUE
 
 SELF_ACCOUNT_ID = "SELF"
 
-FILTER_KEY_WORDS = [
+FILTER_KEYWORDS = [
     "Task timed out",
     "Process exited before completing request",
     "REPORT RequestId",
