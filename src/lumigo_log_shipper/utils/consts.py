@@ -12,3 +12,9 @@ TARGET_ACCOUNT_ID = os.environ.get("TARGET_ACCOUNT_ID", "114300393969")
 LOG_STREAM_KIIL_SWITCH = os.environ.get("LOG_STREAM_KIIL_SWITCH", None) == "TRUE"
 
 SELF_ACCOUNT_ID = "SELF"
+
+FILTER_KEYWORDS = [
+    "Task timed out",
+    "Process exited before completing request",
+    "REPORT RequestId",
+]
