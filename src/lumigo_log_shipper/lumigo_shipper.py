@@ -6,16 +6,19 @@ from lumigo_log_shipper.utils.consts import (
     LOG_STREAM_KIIL_SWITCH,
     TARGET_ACCOUNT_ID,
     ENV,
-)
+    FILTER_KEY_WORDS)
 from lumigo_log_shipper.utils.firehose_dal import FirehoseDal
 from lumigo_log_shipper.utils.aws_utils import extract_aws_logs_data
 from lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
-from lumigo_log_shipper.utils.shipper_utils import should_report_log
+from lumigo_log_shipper.utils.shipper_utils import should_report_log, filter_logs
 
 
-def ship_logs(aws_event: dict) -> int:
+def ship_logs(aws_event: dict, programtic_error_key_word: str = None) -> int:
     extracted_data: AwsLogSubscriptionEvent = extract_aws_logs_data(aws_event)
     shipper_output = parse_aws_extracted_data(extracted_data)
+    if programtic_error_key_word:
+        FILTER_KEY_WORDS.append(programtic_error_key_word)
+    shipper_output = filter_logs(shipper_output, FILTER_KEY_WORDS)
     if len(shipper_output) > 0 and not LOG_STREAM_KIIL_SWITCH:
         account_id = shipper_output[0].event_details.aws_account_id
         func_arn = shipper_output[0].event_details.function_details.resource_id

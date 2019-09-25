@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, List
 
+from lumigo_log_shipper.models import ShipperOutput
 from lumigo_log_shipper.utils.aws_utils import get_function_name_from_arn
 from lumigo_log_shipper.utils.consts import SELF_ACCOUNT_ID
 
@@ -19,3 +20,16 @@ def should_report_log(
         if not is_sending_to_self or not is_func_in_my_env:
             return True
     return False
+
+
+def _is_valid_log(log_message: str, filter_key_words: List[str]):
+    for key_word in filter_key_words:
+        if key_word.lower() in log_message.lower():
+            return True
+    return False
+
+
+def filter_logs(
+    logs: List[ShipperOutput], filter_key_words: List[str]
+) -> List[ShipperOutput]:
+    return [log for log in logs if _is_valid_log(log.message, filter_key_words)]
