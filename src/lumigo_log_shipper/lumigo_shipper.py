@@ -10,6 +10,11 @@ from lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
 def ship_logs(aws_event: dict) -> int:
     extracted_data: AwsLogSubscriptionEvent = extract_aws_logs_data(aws_event)
     shipper_output = parse_aws_extracted_data(extracted_data)
-    firehose_records = list(map(asdict, shipper_output))
-    firehose_dal = FirehoseDal(stream_name=STREAM_NAME)
-    return firehose_dal.put_record_batch(firehose_records)
+    if len(shipper_output) > 0:
+        account_id = shipper_output[0].event_details.aws_account_id
+        firehose_records = list(map(asdict, shipper_output))
+        firehose_dal = FirehoseDal(
+            stream_name=STREAM_NAME, current_account_id=account_id
+        )
+        return firehose_dal.put_record_batch(firehose_records)
+    return 0

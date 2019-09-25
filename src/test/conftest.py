@@ -5,7 +5,7 @@ from pytest import fixture
 from lumigo_log_shipper.utils.firehose_dal import FirehoseDal
 
 
-def mock_boto_firehose_client():
+def mock_boto_firehose_client(x, y):
     return MockFirehoseBotoClient()
 
 
