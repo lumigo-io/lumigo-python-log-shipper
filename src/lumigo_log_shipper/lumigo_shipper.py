@@ -6,7 +6,8 @@ from lumigo_log_shipper.utils.consts import (
     LOG_STREAM_KIIL_SWITCH,
     TARGET_ACCOUNT_ID,
     ENV,
-    FILTER_KEY_WORDS)
+    FILTER_KEY_WORDS,
+)
 from lumigo_log_shipper.utils.firehose_dal import FirehoseDal
 from lumigo_log_shipper.utils.aws_utils import extract_aws_logs_data
 from lumigo_log_shipper.utils.model_builder import parse_aws_extracted_data
