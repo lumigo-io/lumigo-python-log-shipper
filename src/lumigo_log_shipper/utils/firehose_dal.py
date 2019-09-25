@@ -1,11 +1,11 @@
 import json
 from collections import defaultdict
 from typing import List, Dict, Any
-import boto3
 from attr import dataclass
-from lumigo_log_shipper.utils.aws_utils import get_current_region
-from lumigo_log_shipper.utils.consts import TARGET_ACCOUNT_ID
+import boto3
 
+from lumigo_log_shipper.utils.aws_utils import get_current_region
+from lumigo_log_shipper.utils.consts import TARGET_ACCOUNT_ID, SELF_ACCOUNT_ID
 from lumigo_log_shipper.utils.encoder import DecimalEncoder
 from lumigo_log_shipper.utils.sts import assume_role
 from lumigo_log_shipper.utils.utils import split_to_chunks
@@ -27,17 +27,15 @@ class FirehoseDal:
     def __init__(
         self,
         stream_name: str,
-        current_account_id: str,
+        account_id: str,
         max_retry_count: int = MAX_RETRY_COUNT,
         batch_size: int = MAX_MESSAGES_TO_FIREHOSE,
     ):
         """
         :param stream_name: Name of the firehose delivery stream.
         """
-        self.current_account_id = current_account_id
-        self._client = FirehoseDal.get_boto_client(
-            current_account_id, TARGET_ACCOUNT_ID
-        )
+        self.current_account_id = account_id
+        self._client = FirehoseDal.get_boto_client(account_id, TARGET_ACCOUNT_ID)
         self._stream_name = stream_name
         self.max_retry_count = max_retry_count
         self.failed_by_error_code: Dict[str, int] = defaultdict(int)
@@ -97,14 +95,14 @@ class FirehoseDal:
         return list(map(lambda b: Batch(records=b), chunks))
 
     @staticmethod
-    def get_boto_client(current_account_id: str, target_account_id: str):
+    def get_boto_client(account_id: str, target_account_id: str):
         region = get_current_region()
-        sts_response = assume_role(target_account_id)
-        if current_account_id != target_account_id:
+        if account_id != target_account_id and target_account_id != SELF_ACCOUNT_ID:
+            sts_response = assume_role(target_account_id)
             return boto3.client(
                 "firehose",
                 region_name=region,
-                aws_access_key_id=sts_response["Credentials"]["['AccessKeyId']"],
+                aws_access_key_id=sts_response["Credentials"]["AccessKeyId"],
                 aws_secret_access_key=sts_response["Credentials"]["SecretAccessKey"],
                 aws_session_token=sts_response["Credentials"]["SessionToken"],
             )

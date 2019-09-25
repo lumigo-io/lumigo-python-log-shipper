@@ -44,26 +44,24 @@ def test_get_failed_items_add_to_failed_by_error_code(
 
 
 def test_put_records_happy_flow():
-    firehose = FirehoseDal(stream_name="stream_name", current_account_id="random")
+    firehose = FirehoseDal(stream_name="stream_name", account_id="random")
     assert firehose.put_record_batch(records=[{"id": 1}]) == 1
 
 
 def test_put_records_happy_flow_with_non_default_batch_size():
-    firehose = FirehoseDal(
-        stream_name="stream_name", batch_size=1, current_account_id="random"
-    )
+    firehose = FirehoseDal(stream_name="stream_name", batch_size=1, account_id="random")
 
     assert firehose.put_record_batch(records=[{"id": 1}]) == 1
 
 
 def test_put_records_with_record_too_big():
-    firehose = FirehoseDal(stream_name="stream_name", current_account_id="random")
+    firehose = FirehoseDal(stream_name="stream_name", account_id="random")
 
     assert firehose.put_record_batch(records=[{"id": ("x" * 2048000)}]) == 0
 
 
 def test_put_records_with_record_invalid():
-    firehose = FirehoseDal(stream_name="stream_name", current_account_id="random")
+    firehose = FirehoseDal(stream_name="stream_name", account_id="random")
 
     assert firehose.put_record_batch(records=[Exception()]) == 0  # noqa
 
@@ -74,7 +72,7 @@ def test_put_records_error_on_first_try_success_in_second_try(monkeypatch):
         "get_boto_client",
         lambda x, y: MockFirehoseBotoClientRetryWithError(),
     )
-    firehose = FirehoseDal(stream_name="stream_name", current_account_id="random")
+    firehose = FirehoseDal(stream_name="stream_name", account_id="random")
 
     assert firehose.put_record_batch(records=[{"id": 1}]) == 1
 
@@ -82,7 +80,7 @@ def test_put_records_error_on_first_try_success_in_second_try(monkeypatch):
 def test_put_records_exception_on_first_try_success_in_second_try(monkeypatch):
     client = MockFirehoseBotoClientException()
     monkeypatch.setattr(FirehoseDal, "get_boto_client", lambda x, y: client)
-    firehose = FirehoseDal(stream_name="stream_name", current_account_id="random")
+    firehose = FirehoseDal(stream_name="stream_name", account_id="random")
 
     assert firehose.put_record_batch(records=[{"id": 1}]) == 1
 
@@ -94,7 +92,7 @@ def test_put_records_dont_retry_to_many_times(monkeypatch):
         lambda x, y: MockFirehoseBotoClientRetryWithError(3),
     )
     firehose = FirehoseDal(
-        stream_name="stream_name", max_retry_count=2, current_account_id="random"
+        stream_name="stream_name", max_retry_count=2, account_id="random"
     )
 
     assert firehose.put_record_batch(records=[{"id": 1}]) == 0
