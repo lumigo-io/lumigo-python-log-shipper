@@ -23,6 +23,7 @@ def should_report_log(
 
 
 def _is_valid_log(log_message: str, filter_keywords: List[str]):
+    log_message = str(log_message)
     for keyword in filter_keywords:
         if keyword.lower() in log_message.lower():
             return True
