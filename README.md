@@ -11,3 +11,11 @@ from lumigo_log_shipper import lumigo_shipper
 def my_lambda(event, context):
     lumigo_shipper.ship_logs(event, "[Error]")
 ```
+x`
+```bash
+    - Effect: Allow
+      Action:
+        - "sts:AssumeRole"
+      Resource:
+        - "*"
+```
