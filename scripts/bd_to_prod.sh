@@ -38,6 +38,5 @@ echo "Uploading to PyPi"
 pip install twine
 twine upload dist/*
 
-echo "Create release tag"
 push_tags
 echo "Done"
