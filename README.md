@@ -1,3 +1,4 @@
+![Version](https://badge.fury.io/py/lumigo-log-shipper.svg)
 # lumigo-python-log-shipper
 
 [`lumigo-log-shipper`](https://pypi.org/project/lumigo-log-shipper/) is Lumigo's log shipper for Python
