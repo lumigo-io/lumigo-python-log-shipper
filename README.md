@@ -1,3 +1,4 @@
+![CircleCI](https://circleci.com/gh/lumigo-io/lumigo-python-log-shipper/tree/master.svg?style=svg&circle-token=82bcda94717aed3dc5068e1643922ffc0ad039c6)
 ![Version](https://badge.fury.io/py/lumigo-log-shipper.svg)
 # lumigo-python-log-shipper
 
