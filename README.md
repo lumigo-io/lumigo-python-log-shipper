@@ -1,4 +1,5 @@
 ![CircleCI](https://circleci.com/gh/lumigo-io/lumigo-python-log-shipper/tree/master.svg?style=svg&circle-token=82bcda94717aed3dc5068e1643922ffc0ad039c6)
+[![codecov](https://codecov.io/gh/lumigo-io/lumigo-python-log-shipper/branch/master/graph/badge.svg?token=jlGd29sam6)](https://codecov.io/gh/lumigo-io/lumigo-python-log-shipper)
 ![Version](https://badge.fury.io/py/lumigo-log-shipper.svg)
 # lumigo-python-log-shipper
 
@@ -8,7 +9,7 @@
 
 Install `lumigo-log-shipper`:
 
-npm: 
+pip: 
 ~~~bash
 $ pip3 install lumigo-log-shipper
 ~~~

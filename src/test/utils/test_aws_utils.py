@@ -19,12 +19,12 @@ def test_extract_aws_logs_data_simple_flow(simple_aws_event):
         log_events=[
             AwsLogEvent(
                 id="34995183731613629262151179513935230756777419834003488768",
-                timestamp=1569238311100,
+                timestamp=1_569_238_311_100,
                 message="END RequestId: 972f23e6-efab-4897-80a0-12b8f8a28190\n",
             ),
             AwsLogEvent(
                 id="34995183731613629262151179513935230756777419834003488769",
-                timestamp=1569238311100,
+                timestamp=1_569_238_311_100,
                 message="REPORT RequestId: 972f23e6-efab-4897-80a0-12b8f8a28190\tDuration: 100.00 ms\tBilled Duration: 200 ms\tMemory Size: 128 MB\tMax Memory Used: 75 MB\tInit Duration: 156.08 ms\t\nXRAY TraceId: 1-5d88ad26-af7e1cf86161c0887567eed0\tSegmentId: 2ea934c013374041\tSampled: false\t\n",
             ),
         ],
