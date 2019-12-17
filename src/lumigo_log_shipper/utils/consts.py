@@ -23,4 +23,6 @@ FILTER_KEYWORDS = [
     "Task timed out",
     "Process exited before completing request",
     "REPORT RequestId",
+    "[ERROR]",
+    "ERROR	Invoke Error",
 ]

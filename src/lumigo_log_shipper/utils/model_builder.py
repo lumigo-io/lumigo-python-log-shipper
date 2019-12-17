@@ -23,6 +23,7 @@ def parse_aws_extracted_data(
                 timestamp=log_event.timestamp,
                 function_details=FunctionDetails(resource_id=function_arn),
             ),
+            log_stream=extracted_data.log_stream,
         )
         result.append(shipper_output)
     return result

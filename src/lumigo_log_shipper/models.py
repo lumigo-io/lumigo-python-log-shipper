@@ -37,3 +37,4 @@ class ShipperOutput:
     event_details: EventDetails
     timestamp: int
     message: str
+    log_stream: str
