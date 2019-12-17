@@ -10,7 +10,7 @@ from lumigo_log_shipper.utils.aws_utils import get_function_arn
 
 
 def parse_aws_extracted_data(
-    extracted_data: AwsLogSubscriptionEvent
+    extracted_data: AwsLogSubscriptionEvent,
 ) -> List[ShipperOutput]:
     result: List[ShipperOutput] = []
     function_arn = get_function_arn(extracted_data)
