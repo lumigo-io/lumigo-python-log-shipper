@@ -28,6 +28,26 @@ def extract_aws_logs_data(event: dict) -> AwsLogSubscriptionEvent:
     )
 
 
+def extract_aws_logs_data_from_log_record(
+    logs_data_dict: dict,
+) -> AwsLogSubscriptionEvent:
+    return AwsLogSubscriptionEvent(
+        message_type=logs_data_dict["messageType"],
+        owner=logs_data_dict["owner"],
+        log_group=logs_data_dict["logGroup"],
+        log_stream=logs_data_dict["logStream"],
+        subscription_filters=logs_data_dict["subscriptionFilters"],
+        log_events=[
+            AwsLogEvent(
+                id=event.get("id"),
+                timestamp=event.get("timestamp"),
+                message=event.get("message"),
+            )
+            for event in logs_data_dict.get("logEvents", [])
+        ],
+    )
+
+
 def get_current_region() -> str:
     return os.environ.get("AWS_REGION", "us-west-2")
 
