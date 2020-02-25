@@ -15,6 +15,11 @@ def test_lumigo_shipper_full_flow_with_programtic_error_keyword(simple_aws_event
     assert records_send == 2
 
 
+def test_lumigo_aws_log_shipper_exception_not_throw_flow():
+    records_send = _ship_aws_logs(None)
+    assert records_send == 0
+
+
 def test_lumigo_aws_log_shipper_full_flow():
     aws_log1 = {
         "messageType": "DATA_MESSAGE",
