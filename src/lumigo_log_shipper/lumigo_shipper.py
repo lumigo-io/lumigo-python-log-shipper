@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent
 from lumigo_log_shipper.utils.consts import (
@@ -48,7 +48,7 @@ def _ship_aws_logs(aws_logs: List[Dict], programmatic_error_keyword: str = None)
 
 def _ship_logs_to_lumigo(
     shipper_outputs: List[AwsLogSubscriptionEvent],
-    programmatic_error_keyword: Optinal[str] = None,
+    programmatic_error_keyword: Optional[str] = None,
 ) -> int:
     filter_keywords = FILTER_KEYWORDS.copy()
     if programmatic_error_keyword:
