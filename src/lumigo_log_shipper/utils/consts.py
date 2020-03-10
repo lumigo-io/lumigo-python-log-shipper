@@ -15,6 +15,7 @@ if TARGET_ENV == "SELF":
 STREAM_NAME = f"{TARGET_ENV}_logs-edge-stfl_customer-logs-firehose"
 
 TARGET_ACCOUNT_ID = os.environ.get("TARGET_ACCOUNT_ID", "114300393969")
+CURRENT_ACCOUNT_ID = os.environ.get("TARGET_ACCOUNT_ID")
 LOG_STREAM_KIIL_SWITCH = os.environ.get("LOG_STREAM_KIIL_SWITCH", None) == "TRUE"
 
 SELF_ACCOUNT_ID = "SELF"
