@@ -17,7 +17,7 @@ from lumigo_log_shipper.utils.utils import split_to_chunks
 MAX_RETRY_COUNT = 2
 MAX_MESSAGES_TO_FIREHOSE = 500  # Firehose supports batch up to 500 messages.
 MAX_FIREHOSE_RECORD_SIZE = 1024000
-EOL = ","  # Firehose end of line mark
+EOL = "\n"  # Firehose end of line mark
 ENCODING = "utf-8"
 
 

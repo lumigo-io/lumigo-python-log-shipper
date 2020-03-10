@@ -1,8 +1,6 @@
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
 from lumigo_log_shipper.utils.aws_utils import (
     extract_aws_logs_data,
-    get_function_arn,
-    get_function_name_from_arn,
     extract_aws_logs_data_from_log_record,
 )
 from src.test.fixtures import *  # noqa
@@ -12,12 +10,12 @@ def test_extract_aws_logs_data_simple_flow(simple_aws_event):
     result = extract_aws_logs_data(simple_aws_event)
 
     assert result == AwsLogSubscriptionEvent(
-        message_type="DATA_MESSAGE",
+        messageType="DATA_MESSAGE",
         owner="335722316285",
-        log_group="/aws/lambda/test-http-req",
-        log_stream="2019/09/23/[$LATEST]041e7430c6d94506b2bc7b29bd021803",
-        subscription_filters=["LambdaStream_random"],
-        log_events=[
+        logGroup="/aws/lambda/test-http-req",
+        logStream="2019/09/23/[$LATEST]041e7430c6d94506b2bc7b29bd021803",
+        subscriptionFilters=["LambdaStream_random"],
+        logEvents=[
             AwsLogEvent(
                 id="34995183731613629262151179513935230756777419834003488768",
                 timestamp=1_569_238_311_100,
@@ -55,12 +53,12 @@ def test_extract_aws_logs_data_from_log_record_simple_flow():
     result = extract_aws_logs_data_from_log_record(aws_log)
 
     assert result == AwsLogSubscriptionEvent(
-        message_type="DATA_MESSAGE",
+        messageType="DATA_MESSAGE",
         owner="335722316285",
-        log_group="/aws/lambda/test-http-req",
-        log_stream="2019/09/23/[$LATEST]041e7430c6d94506b2bc7b29bd021803",
-        subscription_filters=["LambdaStream_random"],
-        log_events=[
+        logGroup="/aws/lambda/test-http-req",
+        logStream="2019/09/23/[$LATEST]041e7430c6d94506b2bc7b29bd021803",
+        subscriptionFilters=["LambdaStream_random"],
+        logEvents=[
             AwsLogEvent(
                 id="34995183731613629262151179513935230756777419834003488768",
                 timestamp=1_569_238_311_100,
@@ -73,15 +71,3 @@ def test_extract_aws_logs_data_from_log_record_simple_flow():
             ),
         ],
     )
-
-
-def test_get_function_arn(simple_extracted_data):
-    function_arn = get_function_arn(simple_extracted_data)
-    assert (
-        function_arn == f"arn:aws:lambda:us-west-2:335722316285:function:test-http-req"
-    )
-
-
-def test_get_function_name_from_arn():
-    arn = "arn:aws:lambda:us-west-2:11:function:func_name"
-    assert get_function_name_from_arn(arn) == "func_name"

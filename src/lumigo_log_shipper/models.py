@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from dataclasses import dataclass
 
 
@@ -11,30 +11,9 @@ class AwsLogEvent:
 
 @dataclass(frozen=True)
 class AwsLogSubscriptionEvent:
-    message_type: str
+    messageType: str
     owner: str
-    log_group: str
-    log_stream: str
-    subscription_filters: List[str]
-    log_events: List[AwsLogEvent]
-
-
-@dataclass(frozen=True)
-class FunctionDetails:
-    resource_id: Optional[str]
-    memory: float = 0.0  # We cant get memory of the running function from the log-shipper function
-
-
-@dataclass(frozen=True)
-class EventDetails:
-    function_details: FunctionDetails
-    aws_account_id: str
-    timestamp: int
-
-
-@dataclass(frozen=True)
-class ShipperOutput:
-    event_details: EventDetails
-    timestamp: int
-    message: str
-    log_stream: str
+    logGroup: str
+    logStream: str
+    subscriptionFilters: List[str]
+    logEvents: List[AwsLogEvent]
