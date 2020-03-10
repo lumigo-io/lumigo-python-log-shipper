@@ -1,5 +1,5 @@
 from typing import List
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
@@ -17,4 +17,3 @@ class AwsLogSubscriptionEvent:
     logStream: str
     subscriptionFilters: List[str]
     logEvents: List[AwsLogEvent]
-    region: str = field(default="NA")

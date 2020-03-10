@@ -134,7 +134,9 @@ def test_filter_logs_filter_filtering_invalid_items():
         ],
     )
 
-    records_send = ship_logs(_awsLogSubscriptionEvent_to_aws_event(raw_log), "NEW_FILTER")
+    records_send = ship_logs(
+        _awsLogSubscriptionEvent_to_aws_event(raw_log), "NEW_FILTER"
+    )
 
     assert records_send == 1
 
