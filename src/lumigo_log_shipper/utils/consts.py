@@ -9,7 +9,7 @@ if TARGET_ENV == "" or TARGET_ENV is None:
     TARGET_ENV = "prod"
 
 if TARGET_ENV == "SELF":
-    TARGET_ENV = ENV
+    TARGET_ENV = os.environ["ENV"] if IS_LAMBDA_ENVIRONMENT else os.environ["USER"]
 
 STREAM_NAME = f"{TARGET_ENV}_logs-edge-stfl_customer-logs-firehose"
 
