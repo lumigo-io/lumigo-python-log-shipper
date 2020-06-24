@@ -2,7 +2,7 @@ from typing import List
 
 
 def split_to_chunks(list_to_split: list, chunk_size: int) -> List[list]:
-    def chunk(l, n): #noqa E741
+    def chunk(l, n): # noqa E741
         for i in range(0, len(l), n):
             yield l[i : i + n]  # noqa
 
