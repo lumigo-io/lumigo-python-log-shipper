@@ -11,7 +11,7 @@ Install `lumigo-log-shipper`:
 
 pip: 
 ~~~bash
-$ pip3 install lumigo-log-shipper
+$ pip install lumigo-log-shipper
 ~~~
 
 In your lambda's code: 
