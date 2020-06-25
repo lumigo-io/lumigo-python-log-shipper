@@ -4,13 +4,12 @@ IS_LAMBDA_ENVIRONMENT = bool(os.environ.get("AWS_EXECUTION_ENV"))
 
 MASTER_REGION = "us-west-2"
 
-ENV = os.environ["ENV"] if IS_LAMBDA_ENVIRONMENT else os.environ["USER"]
 TARGET_ENV = os.environ.get("TARGET_ENV")
 if TARGET_ENV == "" or TARGET_ENV is None:
     TARGET_ENV = "prod"
 
 if TARGET_ENV == "SELF":
-    TARGET_ENV = ENV
+    TARGET_ENV = os.environ["ENV"] if IS_LAMBDA_ENVIRONMENT else os.environ["USER"]
 
 STREAM_NAME = f"{TARGET_ENV}_logs-edge-stfl_customer-logs-firehose"
 
