@@ -2,9 +2,8 @@
 [![codecov](https://codecov.io/gh/lumigo-io/lumigo-python-log-shipper/branch/master/graph/badge.svg?token=jlGd29sam6)](https://codecov.io/gh/lumigo-io/lumigo-python-log-shipper)
 ![Version](https://badge.fury.io/py/lumigo-log-shipper.svg)
 # lumigo-python-log-shipper
-
-[`lumigo-log-shipper`](https://pypi.org/project/lumigo-log-shipper/) is Lumigo's log shipper for Python
-
+In case your log group is already subscribed to a Lambda as a destination, use this library to send logs to Lumigo.
+Please contact Lumigo's support through the platform chat so we can enable this feature for you.
 ## Usage 
 
 Install `lumigo-log-shipper`:
@@ -41,5 +40,6 @@ Add to your lambda's `serverless.yml`
       Action:
         - "sts:AssumeRole"
       Resource:
-        - "arn:aws:iam::114300393969:role/CustomerLogsWriteRole"
+        - "arn:aws:iam::114300393969:role/prod-CustomerLogsWriteRole"
 ```
+

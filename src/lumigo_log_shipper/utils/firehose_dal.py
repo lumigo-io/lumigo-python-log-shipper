@@ -1,7 +1,7 @@
 import json
 from collections import defaultdict
+from dataclasses import dataclass
 from typing import List, Dict, Any
-from attr import dataclass
 import boto3
 
 from lumigo_log_shipper.utils.aws_utils import get_current_region
