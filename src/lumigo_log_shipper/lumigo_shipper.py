@@ -27,7 +27,7 @@ def ship_logs(aws_event: dict, programmatic_error_keyword: str = None) -> int:
         return res
     except Exception as e:
         # lumigo_shipper will print out the exception but won't raises it
-        get_logger().critical(f"Failed to send customer logs", exc_info=e)
+        get_logger().critical("Failed to send customer logs", exc_info=e)
     return 0
 
 

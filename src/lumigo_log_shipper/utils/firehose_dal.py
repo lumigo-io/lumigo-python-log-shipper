@@ -74,8 +74,7 @@ class FirehoseDal:
                     batches.append(self.create_next_batch(current_batch, failed_items))
             except Exception as e:
                 get_logger().debug(
-                    f"Error while trying to send data to firehose (will retry)",
-                    exc_info=e,
+                    "Error while trying to send data to firehose", exc_info=e,
                 )
                 self.failed_by_error_code[str(type(e).__name__)] += 1
                 if should_retry:
