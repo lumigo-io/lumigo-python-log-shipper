@@ -12,19 +12,22 @@ from lumigo_log_shipper.utils.aws_utils import (
     extract_aws_logs_data,
     extract_aws_logs_data_from_log_record,
 )
+from lumigo_log_shipper.utils.log import get_logger
 from lumigo_log_shipper.utils.shipper_utils import filter_logs
 
 
 def ship_logs(aws_event: dict, programmatic_error_keyword: str = None) -> int:
     try:
         shipper_output: AwsLogSubscriptionEvent = extract_aws_logs_data(aws_event)
-        return _ship_logs_to_lumigo(
+        res = _ship_logs_to_lumigo(
             shipper_outputs=[shipper_output],
             programmatic_error_keyword=programmatic_error_keyword,
         )
-    except Exception:
-        # lumigo_shipper dont raises Exceptions
-        pass
+        get_logger().info(f"Successfully sent {res} logs")
+        return res
+    except Exception as e:
+        # lumigo_shipper will print out the exception but won't raises it
+        get_logger().critical("Failed to send customer logs", exc_info=e)
     return 0
 
 
@@ -50,10 +53,12 @@ def _ship_logs_to_lumigo(
     shipper_outputs: List[AwsLogSubscriptionEvent],
     programmatic_error_keyword: Optional[str] = None,
 ) -> int:
+    get_logger().debug(f"Number of logs before filter {len(shipper_outputs)}")
     filter_keywords = FILTER_KEYWORDS.copy()
     if programmatic_error_keyword:
         filter_keywords.append(programmatic_error_keyword)
     shipper_outputs = filter_logs(shipper_outputs, filter_keywords)
+    get_logger().debug(f"Number of logs after filter {len(shipper_outputs)}")
     if len(shipper_outputs) > 0 and not LOG_STREAM_KIIL_SWITCH:
         account_id = shipper_outputs[0].owner
         firehose_records = list(map(asdict, shipper_outputs))

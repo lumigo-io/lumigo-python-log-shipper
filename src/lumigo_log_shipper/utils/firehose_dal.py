@@ -11,6 +11,7 @@ from lumigo_log_shipper.utils.consts import (
     TARGET_ENV,
 )
 from lumigo_log_shipper.utils.encoder import DecimalEncoder
+from lumigo_log_shipper.utils.log import get_logger
 from lumigo_log_shipper.utils.sts import assume_role
 from lumigo_log_shipper.utils.utils import split_to_chunks
 
@@ -44,6 +45,9 @@ class FirehoseDal:
         self.max_retry_count = max_retry_count
         self.failed_by_error_code: Dict[str, int] = defaultdict(int)
         self.batch_size = min(batch_size, MAX_MESSAGES_TO_FIREHOSE)
+        get_logger().debug(
+            f"Init firehose stream: {stream_name} target account: {TARGET_ACCOUNT_ID}"
+        )
 
     def put_record_batch(self, records: List[dict]) -> int:
         """
@@ -69,6 +73,9 @@ class FirehoseDal:
                 if any(failed_items) and should_retry:
                     batches.append(self.create_next_batch(current_batch, failed_items))
             except Exception as e:
+                get_logger().debug(
+                    "Error while trying to send data to firehose", exc_info=e,
+                )
                 self.failed_by_error_code[str(type(e).__name__)] += 1
                 if should_retry:
                     next_records = current_batch.records
