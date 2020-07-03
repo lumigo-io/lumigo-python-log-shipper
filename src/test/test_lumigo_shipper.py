@@ -23,6 +23,11 @@ def test_lumigo_aws_log_shipper_exception_not_throw_flow():
     assert records_send == 0
 
 
+def test_lumigo_aws_log_shipper_exception_not_throw_flow_wrapper():
+    records_send = ship_logs(None)
+    assert records_send == 0
+
+
 def test_lumigo_aws_log_shipper_full_flow():
     aws_log1 = {
         "messageType": "DATA_MESSAGE",
