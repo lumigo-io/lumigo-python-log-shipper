@@ -23,6 +23,7 @@ FILTER_KEYWORDS = [
     "Process exited before completing request",
     "REPORT RequestId",
     "[ERROR]",
+    "[LUMIGO_LOG]",
     "@lumigo",
     "LambdaRuntimeClientError" "Invoke Error",
     "Uncaught Exception",
