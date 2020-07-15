@@ -25,7 +25,8 @@ FILTER_KEYWORDS = [
     "[ERROR]",
     "[LUMIGO_LOG]",
     "@lumigo",
-    "LambdaRuntimeClientError" "Invoke Error",
+    "LambdaRuntimeClientError",
+    "Invoke Error",
     "Uncaught Exception",
     "Unhandled Promise Rejection",
 ]
