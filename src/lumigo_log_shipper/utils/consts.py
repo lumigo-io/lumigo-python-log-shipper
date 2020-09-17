@@ -29,5 +29,4 @@ FILTER_KEYWORDS = [
     "Invoke Error",
     "Uncaught Exception",
     "Unhandled Promise Rejection",
-    "Traceback",
 ]
