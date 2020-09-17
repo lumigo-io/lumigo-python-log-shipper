@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import List, Dict, Optional
+from typing import List, Optional
 
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent
 from lumigo_log_shipper.utils.consts import (
@@ -8,10 +8,7 @@ from lumigo_log_shipper.utils.consts import (
     FILTER_KEYWORDS,
 )
 from lumigo_log_shipper.utils.firehose_dal import FirehoseDal
-from lumigo_log_shipper.utils.aws_utils import (
-    extract_aws_logs_data,
-    extract_aws_logs_data_from_log_record,
-)
+from lumigo_log_shipper.utils.aws_utils import extract_aws_logs_data
 from lumigo_log_shipper.utils.log import get_logger
 from lumigo_log_shipper.utils.shipper_utils import filter_logs
 
@@ -28,24 +25,6 @@ def ship_logs(aws_event: dict, programmatic_error_keyword: str = None) -> int:
     except Exception as e:
         # lumigo_shipper will print out the exception but won't raises it
         get_logger().critical("Failed to send customer logs", exc_info=e)
-    return 0
-
-
-def _ship_aws_logs(aws_logs: List[Dict], programmatic_error_keyword: str = None) -> int:
-    try:
-        shipper_outputs: List[AwsLogSubscriptionEvent] = []
-        for aws_log in aws_logs:
-            extracted_data: AwsLogSubscriptionEvent = extract_aws_logs_data_from_log_record(
-                aws_log
-            )
-            shipper_outputs.append(extracted_data)
-        return _ship_logs_to_lumigo(
-            shipper_outputs=shipper_outputs,
-            programmatic_error_keyword=programmatic_error_keyword,
-        )
-    except Exception:
-        # lumigo_shipper dont raises Exceptions
-        pass
     return 0
 
 
