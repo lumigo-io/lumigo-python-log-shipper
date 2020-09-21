@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="lumigo-log-shipper",
-    version="1.0.21",
+    version="1.0.22",
     author="Lumigo LTD (https://lumigo.io)",
     author_email="support@lumigo.io",
     description="Ship logs to lumigo platform",
