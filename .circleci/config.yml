@@ -74,7 +74,7 @@ jobs:
     steps:
       - checkout_code
       - run: export AWS_DEFAULT_REGION=us-west-2 && export USER=CICD && ./scripts/checks.sh
-      - run: bash <(curl -s https://codecov.io/bash)
+      - run: ../utils/common_bash/defaults/code_cov.sh
 
 
   deploy:
@@ -82,5 +82,5 @@ jobs:
     steps:
       - checkout_code
       - run: export AWS_DEFAULT_REGION=us-west-2 && export USER=CICD && ./scripts/checks.sh
-      - run: bash <(curl -s https://codecov.io/bash)
+      - run: ../utils/common_bash/defaults/code_cov.sh
       - run: ./scripts/bd_to_prod.sh
