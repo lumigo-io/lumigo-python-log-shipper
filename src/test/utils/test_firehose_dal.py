@@ -1,5 +1,6 @@
 from typing import List
 
+from moto import mock_sts
 import pytest
 
 from lumigo_log_shipper.utils.firehose_dal import FirehoseDal, Batch
@@ -96,6 +97,18 @@ def test_put_records_dont_retry_to_many_times(monkeypatch):
     )
 
     assert firehose.put_record_batch(records=[{"id": 1}]) == 0
+
+
+@pytest.mark.skip_firehose_dal_mock
+@mock_sts
+def test_get_boto_client_in_china_should_connect_to_global(monkeypatch):
+    monkeypatch.setenv("LUMIGO_LOGS_EDGE_AWS_ACCESS_KEY_ID", "key1")
+    monkeypatch.setenv("LUMIGO_LOGS_EDGE_AWS_SECRET_ACCESS_KEY", "secret1")
+    monkeypatch.setenv("AWS_REGION", "cn-northwest-1")
+
+    client = FirehoseDal.get_boto_client("111111111111", "unittests")
+
+    assert client.meta.region_name == "us-west-2"
 
 
 class MockFirehoseBotoClientRetryWithException:

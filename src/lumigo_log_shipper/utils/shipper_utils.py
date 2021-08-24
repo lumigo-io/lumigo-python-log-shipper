@@ -31,6 +31,7 @@ def filter_logs(
                     logStream=log.logStream,
                     subscriptionFilters=log.subscriptionFilters,
                     logEvents=filtered_events,
+                    region=log.region,
                 )
             )
 
