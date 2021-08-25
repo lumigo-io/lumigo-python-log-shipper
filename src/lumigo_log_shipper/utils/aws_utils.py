@@ -7,6 +7,7 @@ from typing import Optional
 import dacite
 
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent
+from lumigo_log_shipper.utils.consts import MASTER_REGION
 
 
 def extract_aws_logs_data(event: dict) -> AwsLogSubscriptionEvent:
@@ -27,5 +28,5 @@ def get_current_region() -> Optional[str]:
 
 def get_dest_region() -> str:
     if is_china_region():
-        return "us-west-2"
-    return get_current_region() or "us-west-2"
+        return MASTER_REGION
+    return get_current_region() or MASTER_REGION
