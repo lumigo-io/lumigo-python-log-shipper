@@ -12,6 +12,9 @@ defaults: &defaults
       AWS_ACCESS_KEY_ID: MOCK
       AWS_SECRET_ACCESS_KEY: MOCK
 
+orbs:
+  lumigo-orb: lumigo/lumigo-orb@volatile
+
 commands:
   checkout_code:
     description: "Checkout code and test it"
@@ -72,6 +75,7 @@ jobs:
   test:
     <<: *defaults
     steps:
+      - lumigo-orb/checkout_utils
       - checkout_code
       - run: export AWS_DEFAULT_REGION=us-west-2 && export USER=CICD && ./scripts/checks.sh
       - run: ../utils/common_bash/defaults/code_cov.sh
@@ -80,6 +84,7 @@ jobs:
   deploy:
     <<: *defaults
     steps:
+      - lumigo-orb/checkout_utils
       - checkout_code
       - run: export AWS_DEFAULT_REGION=us-west-2 && export USER=CICD && ./scripts/checks.sh
       - run: ../utils/common_bash/defaults/code_cov.sh
