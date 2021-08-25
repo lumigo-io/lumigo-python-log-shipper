@@ -1,3 +1,5 @@
+import pytest
+
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
 from lumigo_log_shipper.utils.aws_utils import (
     extract_aws_logs_data,
@@ -41,11 +43,10 @@ def test_am_i_in_china_in_china(monkeypatch):
     assert is_china_region() is True
 
 
-def test_get_dest_region(monkeypatch):
-    monkeypatch.setenv("AWS_REGION", "us-east-1")
-    assert get_dest_region() == "us-east-1"
-
-
-def test_get_dest_region_china(monkeypatch):
-    monkeypatch.setenv("AWS_REGION", "cn-northwest-1")
-    assert get_dest_region() == "us-west-2"
+@pytest.mark.parametrize(
+    ["current_region", "expected_region"],
+    [["us-east-1", "us-east-1"], ["cn-northwest-1", "us-west-2"]],
+)
+def test_get_dest_region(monkeypatch, current_region, expected_region):
+    monkeypatch.setenv("AWS_REGION", current_region)
+    assert get_dest_region() == expected_region
