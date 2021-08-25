@@ -17,7 +17,7 @@ def extract_aws_logs_data(event: dict) -> AwsLogSubscriptionEvent:
     return dacite.from_dict(AwsLogSubscriptionEvent, logs_data_dict)
 
 
-def am_i_in_china() -> bool:
+def is_china_region() -> bool:
     return get_current_region() == "cn-northwest-1"
 
 
@@ -26,6 +26,6 @@ def get_current_region() -> Optional[str]:
 
 
 def get_dest_region() -> str:
-    if am_i_in_china():
+    if is_china_region():
         return "us-west-2"
     return get_current_region() or "us-west-2"

@@ -1,7 +1,7 @@
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent, AwsLogEvent
 from lumigo_log_shipper.utils.aws_utils import (
     extract_aws_logs_data,
-    am_i_in_china,
+    is_china_region,
     get_dest_region,
 )
 from src.test.fixtures import *  # noqa
@@ -33,12 +33,12 @@ def test_extract_aws_logs_data_simple_flow(simple_aws_event):
 
 
 def test_am_i_in_china_not_china():
-    assert am_i_in_china() is False
+    assert is_china_region() is False
 
 
 def test_am_i_in_china_in_china(monkeypatch):
     monkeypatch.setenv("AWS_REGION", "cn-northwest-1")
-    assert am_i_in_china() is True
+    assert is_china_region() is True
 
 
 def test_get_dest_region(monkeypatch):

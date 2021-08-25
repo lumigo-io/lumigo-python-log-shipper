@@ -1,7 +1,7 @@
 import boto3
 import os
 
-from lumigo_log_shipper.utils.aws_utils import am_i_in_china
+from lumigo_log_shipper.utils.aws_utils import is_china_region
 from lumigo_log_shipper.utils.log import get_logger
 
 
@@ -16,7 +16,7 @@ def _get_china_env_var(env_var_name: str) -> str:
 
 
 def _get_boto_sts_client():
-    if not am_i_in_china():
+    if not is_china_region():
         return boto3.client("sts")
     aws_access_key_id = _get_china_env_var("LUMIGO_LOGS_EDGE_AWS_ACCESS_KEY_ID")
     aws_secret_access_key = _get_china_env_var("LUMIGO_LOGS_EDGE_AWS_SECRET_ACCESS_KEY")
