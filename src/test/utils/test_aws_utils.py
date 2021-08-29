@@ -34,11 +34,11 @@ def test_extract_aws_logs_data_simple_flow(simple_aws_event):
     )
 
 
-def test_am_i_in_china_not_china():
+def test_is_china_region_not_china():
     assert is_china_region() is False
 
 
-def test_am_i_in_china_in_china(monkeypatch):
+def test_is_china_region_in_china(monkeypatch):
     monkeypatch.setenv("AWS_REGION", "cn-northwest-1")
     assert is_china_region() is True
 
