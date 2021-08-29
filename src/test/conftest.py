@@ -14,8 +14,14 @@ class MockFirehoseBotoClient:
 
 
 @fixture(autouse=True)
-def firehose_dal_mock(monkeypatch):
-    monkeypatch.setattr(
-        FirehoseDal, "get_boto_client", lambda x, y: MockFirehoseBotoClient()
-    )
+def firehose_dal_mock(monkeypatch, request):
+    if not request.node.get_closest_marker("skip_firehose_dal_mock"):
+        monkeypatch.setattr(
+            FirehoseDal, "get_boto_client", lambda x, y: MockFirehoseBotoClient()
+        )
     yield
+
+
+@fixture(autouse=True)
+def lambda_env(monkeypatch):
+    monkeypatch.setenv("AWS_REGION", "us-west-2")

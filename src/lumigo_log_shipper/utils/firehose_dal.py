@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Any
 import boto3
 
-from lumigo_log_shipper.utils.aws_utils import get_current_region
+from lumigo_log_shipper.utils.aws_utils import get_dest_region, is_china_region
 from lumigo_log_shipper.utils.consts import (
     TARGET_ACCOUNT_ID,
     SELF_ACCOUNT_ID,
@@ -107,8 +107,10 @@ class FirehoseDal:
 
     @staticmethod
     def get_boto_client(account_id: str, target_account_id: str):
-        region = get_current_region()
-        if account_id != target_account_id and target_account_id != SELF_ACCOUNT_ID:
+        region = get_dest_region()
+        if (
+            account_id != target_account_id and target_account_id != SELF_ACCOUNT_ID
+        ) or is_china_region():
             sts_response = assume_role(target_account_id, TARGET_ENV)
             return boto3.client(
                 "firehose",

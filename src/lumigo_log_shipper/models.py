@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from dataclasses import dataclass
 
 
@@ -17,3 +17,4 @@ class AwsLogSubscriptionEvent:
     logStream: str
     subscriptionFilters: List[str]
     logEvents: List[AwsLogEvent]
+    region: Optional[str]
