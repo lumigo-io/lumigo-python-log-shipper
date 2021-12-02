@@ -1,20 +1,21 @@
-from typing import List
+from typing import List, Optional
 
 from lumigo_log_shipper.models import AwsLogSubscriptionEvent
 
 
 def _is_valid_log(
-    log_message: str, filter_keywords: List[str], exclude_filters: List[str] = None
+    log_message: str,
+    filter_keywords: List[str],
+    exclude_filters: Optional[List[str]] = None,
 ):
     log_message = str(log_message)
+    log_message_lower = log_message.lower()
+    if exclude_filters:
+        for exclude_filter in exclude_filters:
+            if exclude_filter.lower() in log_message_lower:
+                return False
     for keyword in filter_keywords:
-        if exclude_filters:
-            for exclude_filter in exclude_filters:
-                if exclude_filter.lower() in log_message.lower():
-                    return False
-        if keyword.lower() in log_message.lower():
-            return True
-        if keyword.lower() in log_message.lower():
+        if keyword.lower() in log_message_lower:
             return True
     return False
 
@@ -22,7 +23,7 @@ def _is_valid_log(
 def filter_logs(
     logs: List[AwsLogSubscriptionEvent],
     filter_keywords: List[str],
-    exclude_filters: List[str] = None,
+    exclude_filters: Optional[List[str]] = None,
 ) -> List[AwsLogSubscriptionEvent]:
     res_list: List[AwsLogSubscriptionEvent] = []
     for log in logs:

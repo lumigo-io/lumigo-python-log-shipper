@@ -16,8 +16,8 @@ from lumigo_log_shipper.utils.sts import ChinaMissingEnvVar
 
 def ship_logs(
     aws_event: dict,
-    programmatic_error_keyword: str = None,
-    exclude_filters: List[str] = None,
+    programmatic_error_keyword: Optional[str] = None,
+    exclude_filters: Optional[List[str]] = None,
 ) -> int:
     try:
         shipper_output: AwsLogSubscriptionEvent = extract_aws_logs_data(aws_event)
@@ -39,7 +39,7 @@ def ship_logs(
 def _ship_logs_to_lumigo(
     shipper_outputs: List[AwsLogSubscriptionEvent],
     programmatic_error_keyword: Optional[str] = None,
-    exclude_filters: List[str] = None,
+    exclude_filters: Optional[List[str]] = None,
 ) -> int:
     get_logger().debug(f"Number of logs before filter {len(shipper_outputs)}")
     filter_keywords = FILTER_KEYWORDS.copy()
