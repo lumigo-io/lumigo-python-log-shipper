@@ -120,6 +120,35 @@ def test_filter_logs_filter_exclude_filter():
     assert records_send == 0
 
 
+def test_filter_logs_filter_exclude_filter_not_filtered():
+    raw_log = AwsLogSubscriptionEvent(
+        messageType="DATA_MESSAGE",
+        owner="335722316285",
+        logGroup="/aws/lambda/test-http-req",
+        logStream="2019/09/23/[$LATEST]041e7430c6d94506b2bc7b29bd021803",
+        subscriptionFilters=["LambdaStream_random"],
+        logEvents=[
+            AwsLogEvent(
+                id="34995183731613629262151179513935230756777419834003488769",
+                timestamp=1569238311100,
+                message="INFO",
+            ),
+            AwsLogEvent(
+                id="34995183731613629262151179513935230756777419834003488769",
+                timestamp=1569238311100,
+                message="INFO",
+            ),
+        ],
+        region="us-west-2",
+    )
+
+    records_send = ship_logs(
+        _awsLogSubscriptionEvent_to_aws_event(raw_log), "INFO", ["NOT_EXCLUDE"]
+    )
+
+    assert records_send == 1
+
+
 def _awsLogSubscriptionEvent_to_aws_event(event: AwsLogSubscriptionEvent) -> dict:
     logs_data = json.dumps(asdict(event))
     logs_data_zipped = gzip.compress(bytes(logs_data, "utf-8"))
