@@ -20,6 +20,7 @@ echo "|    |___|  |  /  Y Y  \  / /_/  >  <_> )   |  (  <_> )";
 echo "|_______ \____/|__|_|  /__\___  / \____/ /\ |__|\____/ ";
 echo "        \/           \/  /_____/         \/            ";
 echo
+echo "Deploy lumigo-log-shipper to pypi server"
 
 setup_git
 
@@ -29,7 +30,8 @@ echo "Create package"
 python setup.py bdist_wheel
 
 echo "Getting latest changes from git"
-changes=$(git log $(git describe --tags --abbrev=0)..HEAD --oneline)
+latest_tag="$(git describe --tags --abbrev=0)"
+changes=$(git log "${latest_tag}..HEAD" --oneline)
 
 bumpversion patch --message "{current_version} → {new_version}. Changes: ${changes}"
 
