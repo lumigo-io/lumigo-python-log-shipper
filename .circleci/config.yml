@@ -1,12 +1,43 @@
 version: 2.1
 
 orbs:
-  lumigo-orb: lumigo/lumigo-orb@volatile
+  lumigo-orb: &lumigo_orb_version lumigo/lumigo-orb@volatile
 
 workflows:
   test-deploy:
     jobs:
+    - lumigo-orb/print_orb_versions:
+        lumigo_orb_version: *lumigo_orb_version
     - lumigo-orb/test
+    - lumigo-orb/is_environment_available:
+        filters:
+          branches:
+            ignore: master
+    - lumigo-orb/be-deploy:
+        requires:
+          - lumigo-orb/is_environment_available
+    - lumigo-orb/integration-test-prep:
+        deploy_spec: default
+        requires:
+          - lumigo-orb/be-deploy
+    - lumigo-orb/integration-test-limited-flows:
+        deploy_spec: default
+        tests_spec: testNormal
+        requires:
+          - lumigo-orb/integration-test-prep
+    - lumigo-orb/integration-test-parallel:
+        deploy_spec: default
+        tests_spec: testNormal
+        requires:
+          - lumigo-orb/integration-test-limited-flows
+    - lumigo-orb/e2e-test:
+        requires:
+          - lumigo-orb/integration-test-parallel
+    - lumigo-orb/workflow-completed-successfully:
+        requires:
+          - lumigo-orb/test
+          - lumigo-orb/e2e-test
+
     - lumigo-orb/deploy:
         filters:
           branches:
