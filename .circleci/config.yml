@@ -8,29 +8,33 @@ workflows:
     jobs:
     - lumigo-orb/print_orb_versions:
         lumigo_orb_version: *lumigo_orb_version
-    - lumigo-orb/test
+
+    - lumigo-orb/test:
+        context: common
+
     - lumigo-orb/is_environment_available:
+        context: common
         filters:
           branches:
             ignore: master
     - lumigo-orb/be-deploy:
+        context: common
         requires:
           - lumigo-orb/is_environment_available
     - lumigo-orb/integration-test-prep:
-        deploy_spec: default
+        context: common
         requires:
           - lumigo-orb/be-deploy
     - lumigo-orb/integration-test-limited-flows:
-        deploy_spec: default
-        tests_spec: testNormal
+        context: common
         requires:
           - lumigo-orb/integration-test-prep
     - lumigo-orb/integration-test-parallel:
-        deploy_spec: default
-        tests_spec: testNormal
+        context: common
         requires:
           - lumigo-orb/integration-test-limited-flows
     - lumigo-orb/e2e-test:
+        context: common
         requires:
           - lumigo-orb/integration-test-parallel
     - lumigo-orb/workflow-completed-successfully:
@@ -39,6 +43,12 @@ workflows:
           - lumigo-orb/e2e-test
 
     - lumigo-orb/deploy:
+        context:
+          - common
+          - fury
+          - twine
         filters:
           branches:
             only: master
+        requires:
+          - lumigo-orb/test
